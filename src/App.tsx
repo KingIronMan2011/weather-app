@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -7,18 +7,59 @@ import SearchBar from './components/SearchBar';
 import ForecastCard from './components/ForecastCard';
 import WeatherDetails from './components/WeatherDetails';
 import HourlyForecast from './components/HourlyForecast';
-import { weatherDatabase } from './data/weatherData';
+import { fetchWeatherData, getLocationFromGeolocation, getLocationFromIP } from './components/WeatherData';
 
 function App() {
-  const [currentLocation, setCurrentLocation] = useState('New York');
-
-  const currentWeatherData = weatherDatabase[currentLocation];
-
-  const handleLocationSelect = (location: string) => {
-    if (weatherDatabase[location]) {
-      setCurrentLocation(location);
-    }
+  type WeatherDataType = {
+    weather: any;
+    forecast: any;
+    details: any;
+    hourly: any;
   };
+
+  const [location, setLocation] = useState<{ name: string; lat: number; lon: number } | null>(null);
+  const [weatherData, setWeatherData] = useState<WeatherDataType | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  // Detect user location on mount
+  useEffect(() => {
+    if (!location) {
+      getLocationFromGeolocation()
+        .then(setLocation)
+        .catch(async () => {
+          const fallback = await getLocationFromIP();
+          setLocation(fallback);
+        });
+    }
+  }, []);
+
+  // Fetch weather when location is set/changed
+  useEffect(() => {
+    if (!location) return;
+    setLoading(true);
+    fetchWeatherData(location.name, location.lat, location.lon)
+      .then(({ weather, forecast, details, hourly }) => {
+        setWeatherData({ weather, forecast, details, hourly });
+        setLoading(false);
+      })
+      .catch(() => {
+        setWeatherData(null);
+        setLoading(false);
+      });
+  }, [location]);
+
+  // Accepts name, lat, lon from SearchBar
+  const handleLocationSelect = (name: string, lat: number, lon: number) => {
+    setLocation({ name, lat, lon });
+  };
+
+  if (!location || loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!weatherData) {
+    return <div>No weather data available</div>;
+  }
 
   return (
     <ThemeProvider>
@@ -55,23 +96,23 @@ function App() {
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-8">
               {/* Current Weather - Takes 2 columns on xl screens */}
               <div className="xl:col-span-2">
-                <WeatherCard weather={currentWeatherData.weather} />
+                <WeatherCard weather={weatherData.weather} />
               </div>
               
               {/* Weather Details */}
               <div>
-                <WeatherDetails details={currentWeatherData.details} />
+                <WeatherDetails details={weatherData.details} />
               </div>
             </div>
 
             {/* Hourly Forecast */}
             <div className="mb-8">
-              <HourlyForecast hourlyData={currentWeatherData.hourly} />
+              <HourlyForecast hourlyData={weatherData.hourly} />
             </div>
 
             {/* 5-Day Forecast */}
             <div>
-              <ForecastCard forecasts={currentWeatherData.forecast} />
+              <ForecastCard forecasts={weatherData.forecast} />
             </div>
           </div>
         </div>
