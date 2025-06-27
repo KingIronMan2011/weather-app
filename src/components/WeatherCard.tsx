@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cloud, Sun, CloudRain, CloudSnow, CloudLightning, Wind, Eye, Droplets, Thermometer } from 'lucide-react';
+import { Cloud, Sun, CloudRain, CloudSnow, CloudLightning, Wind, Eye, Droplets } from 'lucide-react';
 
 interface WeatherData {
   location: string;
