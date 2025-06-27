@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchWeatherData, getLocationFromGeolocation, getLocationFromIP } from './components/WeatherData';
 import { ThemeProvider } from './contexts/ThemeContext';
-import { LanguageProvider } from "./contexts/LanguageContext";
+import { LanguageProvider, useLanguage } from "./contexts/LanguageContext";
 import Header from './components/Header';
 import Footer from './components/Footer';
 import WeatherCard from './components/WeatherCard';
@@ -55,12 +55,28 @@ function App() {
     setLocation({ name, lat, lon });
   };
 
+  const { t } = useLanguage();
+
   if (!location || loading) {
-    return <Loader />;
+    return (
+      <LanguageProvider>
+        <ThemeProvider>
+          <Loader />
+        </ThemeProvider>
+      </LanguageProvider>
+    );
   }
 
   if (!weatherData) {
-    return <div>No weather data available</div>;
+    return (
+      <LanguageProvider>
+        <ThemeProvider>
+          <div className="flex items-center justify-center min-h-[40vh] text-lg text-gray-600 dark:text-gray-300">
+            {t("noData")}
+          </div>
+        </ThemeProvider>
+      </LanguageProvider>
+    );
   }
 
   return (
@@ -81,13 +97,13 @@ function App() {
               <div className="flex flex-col gap-3 md:gap-6 md:flex-row md:items-center md:justify-between">
                 <div>
                   <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 dark:text-white mb-1 md:mb-2">
-                    Weather
+                    {t("appTitle")}
                     <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent ml-2">
-                      Dashboard
+                      {t("dashboard") || "Dashboard"}
                     </span>
                   </h1>
                   <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">
-                    Stay updated with accurate weather forecasts worldwide
+                    {t("appSubtitle")}
                   </p>
                 </div>
                 <div className="w-full md:w-auto flex-1 md:max-w-3xl lg:max-w-3xl">

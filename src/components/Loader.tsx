@@ -1,10 +1,19 @@
 import { CloudSun } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
+import { useTheme } from "../contexts/ThemeContext";
 
 const Loader = () => {
   const { t } = useLanguage();
+  const { isDark } = useTheme();
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-[40vh]">
+    <div
+      className={`fixed inset-0 flex flex-col items-center justify-center min-h-screen w-screen transition-colors duration-300 z-50 ${
+        isDark
+          ? "bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900"
+          : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
+      }`}
+    >
       <div className="relative flex items-center justify-center">
         <span className="absolute inline-flex h-20 w-20 rounded-full bg-gradient-to-tr from-blue-300/30 via-purple-200/30 to-yellow-100/30 blur-2xl animate-pulse"></span>
         <CloudSun className="h-14 w-14 text-blue-400 dark:text-blue-300 animate-bounce-slow drop-shadow-lg" />

@@ -1,5 +1,6 @@
 const it = {
-  appTitle: "Dashboard Meteo",
+  appTitle: "Meteo",
+  dashboard: "Dashboard",
   appSubtitle: "Rimani aggiornato con previsioni meteo accurate in tutto il mondo",
   searchPlaceholder: "Cerca una città o località...",
   currentWeather: "Meteo Attuale",

@@ -1,5 +1,6 @@
 const en = {
-  appTitle: "Weather Dashboard",
+  appTitle: "Weather",
+  dashboard: "Dashboard",
   appSubtitle: "Stay updated with accurate weather forecasts worldwide",
   searchPlaceholder: "Search for a city or location...",
   currentWeather: "Current Weather",
