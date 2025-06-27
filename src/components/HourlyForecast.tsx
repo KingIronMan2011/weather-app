@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sun, Cloud, CloudRain, CloudSnow, CloudLightning } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface HourlyData {
   time: string;
@@ -13,6 +14,8 @@ interface HourlyForecastProps {
 }
 
 const HourlyForecast: React.FC<HourlyForecastProps> = ({ hourlyData }) => {
+  const { t } = useLanguage();
+
   const getWeatherIcon = (type: string) => {
     const iconClass = 'w-6 h-6';
     switch (type) {
@@ -33,7 +36,7 @@ const HourlyForecast: React.FC<HourlyForecastProps> = ({ hourlyData }) => {
 
   return (
     <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-xl border border-white/20 dark:border-gray-700/20 p-6">
-      <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Hourly Forecast</h2>
+      <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">{t("hourlyForecast")}</h2>
       
       <div className="flex space-x-4 overflow-x-auto pb-2 scrollbar-hide">
         {hourlyData.map((hour, index) => (
@@ -47,7 +50,7 @@ const HourlyForecast: React.FC<HourlyForecastProps> = ({ hourlyData }) => {
             </div>
             <div className="font-bold text-gray-800 dark:text-white mb-1">{hour.temperature}°</div>
             {hour.precipitation > 0 && (
-              <div className="text-xs text-blue-500 dark:text-blue-400">{hour.precipitation}%</div>
+              <div className="text-xs text-blue-500 dark:text-blue-400">{hour.precipitation}% {t("precipitation")}</div>
             )}
           </div>
         ))}

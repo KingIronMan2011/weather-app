@@ -1,5 +1,6 @@
 import React from 'react';
 import { Cloud, Sun, CloudRain, CloudSnow, CloudLightning, Wind, Eye, Droplets } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface WeatherData {
   location: string;
@@ -18,6 +19,8 @@ interface WeatherCardProps {
 }
 
 const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
+  const { t } = useLanguage();
+
   const getWeatherIcon = (type: string) => {
     switch (type) {
       case 'sunny':
@@ -79,7 +82,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
             <span className="text-3xl font-light ml-2">°C</span>
           </div>
           <p className="text-2xl font-medium text-white/90 mt-2">{weather.condition}</p>
-          <p className="text-white/70 text-lg">Feels like {weather.feelsLike}°C</p>
+          <p className="text-white/70 text-lg">{t("feelsLike")} {weather.feelsLike}°C</p>
         </div>
 
         {/* Weather Details */}
@@ -87,21 +90,21 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
           <div className="flex items-center space-x-3 bg-white/10 rounded-2xl p-4 backdrop-blur-sm transition-all duration-300 hover:bg-white/20">
             <Wind className="w-6 h-6 text-white/80" />
             <div>
-              <p className="text-white/70 text-sm">Wind</p>
+              <p className="text-white/70 text-sm">{t("wind")}</p>
               <p className="font-semibold text-lg">{weather.windSpeed} km/h</p>
             </div>
           </div>
           <div className="flex items-center space-x-3 bg-white/10 rounded-2xl p-4 backdrop-blur-sm transition-all duration-300 hover:bg-white/20">
             <Droplets className="w-6 h-6 text-white/80" />
             <div>
-              <p className="text-white/70 text-sm">Humidity</p>
+              <p className="text-white/70 text-sm">{t("humidity")}</p>
               <p className="font-semibold text-lg">{weather.humidity}%</p>
             </div>
           </div>
           <div className="flex items-center space-x-3 bg-white/10 rounded-2xl p-4 backdrop-blur-sm transition-all duration-300 hover:bg-white/20">
             <Eye className="w-6 h-6 text-white/80" />
             <div>
-              <p className="text-white/70 text-sm">Visibility</p>
+              <p className="text-white/70 text-sm">{t("visibility")}</p>
               <p className="font-semibold text-lg">{weather.visibility} km</p>
             </div>
           </div>

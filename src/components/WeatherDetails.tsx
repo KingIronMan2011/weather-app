@@ -1,5 +1,6 @@
 import React from 'react';
 import { Thermometer, Eye, Wind, Droplets, Sun, Gauge } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface WeatherDetailsProps {
   details: {
@@ -13,12 +14,14 @@ interface WeatherDetailsProps {
 }
 
 const WeatherDetails: React.FC<WeatherDetailsProps> = ({ details }) => {
+  const { t } = useLanguage();
+
   const getUVLevel = (index: number) => {
-    if (index <= 2) return { level: 'Low', color: 'text-green-500', bg: 'bg-green-100 dark:bg-green-900/30' };
-    if (index <= 5) return { level: 'Moderate', color: 'text-yellow-500', bg: 'bg-yellow-100 dark:bg-yellow-900/30' };
-    if (index <= 7) return { level: 'High', color: 'text-orange-500', bg: 'bg-orange-100 dark:bg-orange-900/30' };
-    if (index <= 10) return { level: 'Very High', color: 'text-red-500', bg: 'bg-red-100 dark:bg-red-900/30' };
-    return { level: 'Extreme', color: 'text-purple-500', bg: 'bg-purple-100 dark:bg-purple-900/30' };
+    if (index <= 2) return { level: t('uvLow'), color: 'text-green-500', bg: 'bg-green-100 dark:bg-green-900/30' };
+    if (index <= 5) return { level: t('uvModerate'), color: 'text-yellow-500', bg: 'bg-yellow-100 dark:bg-yellow-900/30' };
+    if (index <= 7) return { level: t('uvHigh'), color: 'text-orange-500', bg: 'bg-orange-100 dark:bg-orange-900/30' };
+    if (index <= 10) return { level: t('uvVeryHigh'), color: 'text-red-500', bg: 'bg-red-100 dark:bg-red-900/30' };
+    return { level: t('uvExtreme'), color: 'text-purple-500', bg: 'bg-purple-100 dark:bg-purple-900/30' };
   };
 
   const uvInfo = getUVLevel(details.uvIndex);
@@ -26,13 +29,13 @@ const WeatherDetails: React.FC<WeatherDetailsProps> = ({ details }) => {
   const detailItems = [
     {
       icon: <Thermometer className="w-6 h-6" />,
-      label: 'Real Feel',
+      label: t("realFeel"),
       value: `${details.realFeel}°C`,
-      description: 'How the temperature feels'
+      description: t("feelsLike")
     },
     {
       icon: <Sun className="w-6 h-6" />,
-      label: 'UV Index',
+      label: t("uvIndex"),
       value: details.uvIndex.toString(),
       description: uvInfo.level,
       extra: (
@@ -43,33 +46,33 @@ const WeatherDetails: React.FC<WeatherDetailsProps> = ({ details }) => {
     },
     {
       icon: <Wind className="w-6 h-6" />,
-      label: 'Wind Direction',
+      label: t("windDirection"),
       value: details.windDirection,
-      description: 'Current wind direction'
+      description: t("windDirection")
     },
     {
       icon: <Gauge className="w-6 h-6" />,
-      label: 'Pressure',
+      label: t("pressure"),
       value: `${details.pressure} hPa`,
-      description: 'Atmospheric pressure'
+      description: t("pressure")
     },
     {
       icon: <Droplets className="w-6 h-6" />,
-      label: 'Dew Point',
+      label: t("dewPoint"),
       value: `${details.dewPoint}°C`,
-      description: 'Temperature of saturation'
+      description: t("dewPoint")
     },
     {
       icon: <Eye className="w-6 h-6" />,
-      label: 'Visibility',
+      label: t("visibility"),
       value: `${details.visibility} km`,
-      description: 'How far you can see'
+      description: t("visibility")
     }
   ];
 
   return (
     <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-xl border border-white/20 dark:border-gray-700/20 p-8">
-      <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">Weather Details</h2>
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">{t("weatherDetails")}</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {detailItems.map((item, index) => (

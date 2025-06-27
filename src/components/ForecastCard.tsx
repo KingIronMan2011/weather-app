@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sun, Cloud, CloudRain, CloudSnow, CloudLightning } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface DayForecast {
   day: string;
@@ -16,6 +17,8 @@ interface ForecastCardProps {
 }
 
 const ForecastCard: React.FC<ForecastCardProps> = ({ forecasts }) => {
+  const { t } = useLanguage();
+
   const getWeatherIcon = (type: string, size = 'w-8 h-8') => {
     const iconClass = `${size} text-gray-600 dark:text-gray-400`;
     switch (type) {
@@ -36,7 +39,7 @@ const ForecastCard: React.FC<ForecastCardProps> = ({ forecasts }) => {
 
   return (
     <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-xl border border-white/20 dark:border-gray-700/20 p-8">
-      <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">5-Day Forecast</h2>
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">{t("dailyForecast")}</h2>
       
       <div className="space-y-4">
         {forecasts.map((day, index) => (
@@ -55,7 +58,9 @@ const ForecastCard: React.FC<ForecastCardProps> = ({ forecasts }) => {
               <div className="text-center min-w-0 flex-1">
                 <div className="text-sm font-medium text-gray-700 dark:text-gray-300">{day.condition}</div>
                 {day.precipitation > 0 && (
-                  <div className="text-xs text-blue-500 dark:text-blue-400">{day.precipitation}% rain</div>
+                  <div className="text-xs text-blue-500 dark:text-blue-400">
+                    {day.precipitation}% {t("precipitation")}
+                  </div>
                 )}
               </div>
             </div>

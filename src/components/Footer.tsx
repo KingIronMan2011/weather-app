@@ -1,25 +1,28 @@
 import React from 'react';
 import { Github, Twitter, Linkedin, Mail, MapPin, Phone } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Footer: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="relative z-20 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-t border-gray-200/20 dark:border-gray-700/20 mt-16">
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">WeatherPro</h3>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">{t("footerCompany")}</h3>
             <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-              Your trusted source for accurate weather forecasts and real-time weather updates worldwide.
+              {t("footerCompanyDesc")}
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" aria-label="Twitter">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" aria-label="GitHub">
                 <Github className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" aria-label="LinkedIn">
                 <Linkedin className="w-5 h-5" />
               </a>
             </div>
@@ -27,41 +30,41 @@ const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Quick Links</h3>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">{t("footerQuickLinks")}</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">Weather Maps</a></li>
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">Satellite Images</a></li>
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">Weather Alerts</a></li>
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">Historical Data</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">{t("footerWeatherMaps")}</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">{t("footerSatelliteImages")}</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">{t("footerWeatherAlerts")}</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">{t("footerHistoricalData")}</a></li>
             </ul>
           </div>
 
           {/* Services */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Services</h3>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">{t("footerServices")}</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">API Access</a></li>
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">Mobile App</a></li>
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">Premium Features</a></li>
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">Support</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">{t("footerAPIAccess")}</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">{t("footerMobileApp")}</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">{t("footerPremiumFeatures")}</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">{t("footerSupport")}</a></li>
             </ul>
           </div>
 
           {/* Contact */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Contact</h3>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">{t("footerContact")}</h3>
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-sm text-gray-600 dark:text-gray-400">
                 <Mail className="w-4 h-4" />
-                <span>info@weatherpro.com</span>
+                <span>{t("footerEmail")}</span>
               </div>
               <div className="flex items-center space-x-3 text-sm text-gray-600 dark:text-gray-400">
                 <Phone className="w-4 h-4" />
-                <span>+1 (555) 123-4567</span>
+                <span>{t("footerPhone")}</span>
               </div>
               <div className="flex items-center space-x-3 text-sm text-gray-600 dark:text-gray-400">
                 <MapPin className="w-4 h-4" />
-                <span>San Francisco, CA</span>
+                <span>{t("footerLocation")}</span>
               </div>
             </div>
           </div>
@@ -71,17 +74,17 @@ const Footer: React.FC = () => {
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              © 2024 WeatherPro. All rights reserved.
+              © 2024 {t("footerCompany")}. {t("footerRights")}
             </p>
             <div className="flex space-x-6">
               <a href="#" className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                Privacy Policy
+                {t("footerPrivacyPolicy")}
               </a>
               <a href="#" className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                Terms of Service
+                {t("footerTerms")}
               </a>
               <a href="#" className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                Cookie Policy
+                {t("footerCookiePolicy")}
               </a>
             </div>
           </div>

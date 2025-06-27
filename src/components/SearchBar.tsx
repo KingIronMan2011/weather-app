@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, MapPin, Clock } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface SearchBarProps {
   onLocationSelect: (location: string, lat: number, lon: number) => void;
@@ -12,6 +13,7 @@ type Suggestion = {
 };
 
 const SearchBar: React.FC<SearchBarProps> = ({ onLocationSelect }) => {
+  const { t } = useLanguage();
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
@@ -69,7 +71,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onLocationSelect }) => {
           onChange={handleInput}
           onFocus={() => setIsOpen(true)}
           className="w-full pl-12 pr-4 py-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-2xl border border-white/20 dark:border-gray-700/20 shadow-lg text-gray-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent transition-all duration-300"
-          placeholder="Search for a city..."
+          placeholder={t("searchPlaceholder")}
         />
       </div>
 
@@ -78,7 +80,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onLocationSelect }) => {
           <div className="py-2">
             {query.length === 0 && recentSearches.current.length > 0 && (
               <div>
-                <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400 font-medium">Recent Searches</div>
+                <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400 font-medium">{t("recentSearches")}</div>
                 {recentSearches.current.map((s, idx) => (
                   <button
                     key={idx}
@@ -94,7 +96,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onLocationSelect }) => {
               </div>
             )}
             {loading && (
-              <div className="px-4 py-3 text-sm text-gray-400">Searching...</div>
+              <div className="px-4 py-3 text-sm text-gray-400">{t("searching")}</div>
             )}
             {!loading && suggestions.map((s, idx) => (
               <button
@@ -110,7 +112,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onLocationSelect }) => {
             ))}
             {!loading && suggestions.length === 0 && query.length > 1 && (
               <div className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
-                No cities found matching "{query}"
+                {t("noCitiesFound")}
               </div>
             )}
           </div>

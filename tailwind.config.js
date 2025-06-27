@@ -7,6 +7,8 @@ export default {
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
         'slide-up': 'slideUp 0.3s ease-out',
+        'spin-slow': 'spin 2s linear infinite',
+        'bounce-slow': 'bounce 2.5s infinite',
       },
       keyframes: {
         fadeIn: {
