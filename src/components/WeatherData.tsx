@@ -112,11 +112,13 @@ export async function fetchWeatherData(
     weatherType: mapWeatherCodeToType(data.current_weather.weathercode),
   };
 
+  const windDeg = data.hourly.winddirection_10m?.[currentHourIndex] ?? 0;
+
   // WeatherDetails
   const details: WeatherDetails = {
     realFeel: Math.round(data.hourly.apparent_temperature?.[currentHourIndex] ?? data.current_weather.temperature),
     uvIndex: Math.round(data.hourly.uv_index?.[currentHourIndex] ?? data.daily.uv_index_max?.[0] ?? 0),
-    windDirection: data.hourly.winddirection_10m?.[currentHourIndex]?.toString() ?? "N",
+    windDirection: degreesToCompass(windDeg),
     pressure: Math.round(data.hourly.surface_pressure?.[currentHourIndex] ?? 1013),
     dewPoint: Math.round(data.hourly.dew_point_2m?.[currentHourIndex] ?? 0),
     visibility: data.hourly.visibility?.[currentHourIndex] ?? 0,
@@ -174,4 +176,13 @@ export async function getLocationFromIP(): Promise<{ name: string; lat: number; 
   } catch {
     return COUNTRY_CAPITALS.DEFAULT;
   }
+}
+
+function degreesToCompass(degrees: number): string {
+  const directions = [
+    "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
+    "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"
+  ];
+  const index = Math.round(degrees / 22.5) % 16;
+  return directions[index];
 }
