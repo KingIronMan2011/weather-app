@@ -72,33 +72,34 @@ function App() {
 
         <Header />
 
-        <div className="relative z-10 p-6">
+        <div className="relative z-10 p-2 sm:p-4 md:p-6">
           {/* Main Title Section */}
-          <div className="max-w-7xl mx-auto mb-8">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div className="max-w-2xl md:max-w-4xl lg:max-w-7xl mx-auto mb-4 md:mb-8">
+            <div className="flex flex-col gap-3 md:gap-6 md:flex-row md:items-center md:justify-between">
               <div>
-                <h1 className="text-4xl lg:text-5xl font-bold text-gray-800 dark:text-white mb-2">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 dark:text-white mb-1 md:mb-2">
                   Weather
                   <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent ml-2">
                     Dashboard
                   </span>
                 </h1>
-                <p className="text-gray-600 dark:text-gray-400 text-lg">
+                <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">
                   Stay updated with accurate weather forecasts worldwide
                 </p>
               </div>
-              <SearchBar onLocationSelect={handleLocationSelect} />
+              <div className="w-full md:w-auto">
+                <SearchBar onLocationSelect={handleLocationSelect} />
+              </div>
             </div>
           </div>
 
           {/* Main Content */}
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-8">
-              {/* Current Weather - Takes 2 columns on xl screens */}
-              <div className="xl:col-span-2">
+          <div className="max-w-2xl md:max-w-4xl lg:max-w-7xl mx-auto">
+            <div className="flex flex-col gap-4 md:grid md:grid-cols-3 md:gap-8 mb-4 md:mb-8">
+              {/* Current Weather - Takes 2 columns on md+ screens */}
+              <div className="md:col-span-2">
                 <WeatherCard weather={weatherData.weather} />
               </div>
-              
               {/* Weather Details */}
               <div>
                 <WeatherDetails details={weatherData.details} />
@@ -106,7 +107,7 @@ function App() {
             </div>
 
             {/* Hourly Forecast */}
-            <div className="mb-8">
+            <div className="mb-4 md:mb-8">
               <HourlyForecast hourlyData={weatherData.hourly} />
             </div>
 
