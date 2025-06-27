@@ -83,13 +83,13 @@ export async function fetchWeatherData(
   details: WeatherDetails;
   hourly: HourlyData[];
 }> {
-  const res = await fetch(
-    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
     `&current_weather=true` +
     `&hourly=temperature_2m,apparent_temperature,precipitation,weathercode,relative_humidity_2m,dew_point_2m,uv_index,visibility,surface_pressure,winddirection_10m` +
     `&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode,uv_index_max` +
-    `&forecast_days=5&timezone=auto`
-  );
+    `&forecast_days=5&timezone=auto`;
+
+  const res = await fetch(url);
   const data = await res.json();
 
   // Find the current hour index
