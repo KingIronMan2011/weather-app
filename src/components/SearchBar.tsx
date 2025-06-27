@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Search, MapPin, Clock } from 'lucide-react';
 
 interface SearchBarProps {
@@ -17,23 +17,33 @@ const SearchBar: React.FC<SearchBarProps> = ({ onLocationSelect }) => {
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [loading, setLoading] = useState(false);
   const recentSearches = useRef<Suggestion[]>([]);
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
 
-  const fetchSuggestions = async (q: string) => {
-    setLoading(true);
-    const res = await fetch(
-      `https://nominatim.openstreetmap.org/search?city=${encodeURIComponent(q)}&format=json&limit=8`
-    );
-    const data = await res.json();
-    setSuggestions(data);
-    setLoading(false);
-  };
+  // Debounce logic
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedQuery(query), 300);
+    return () => clearTimeout(handler);
+  }, [query]);
+
+  useEffect(() => {
+    const fetchSuggestions = async (q: string) => {
+      setLoading(true);
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?city=${encodeURIComponent(q)}&format=json&limit=8`
+      );
+      const data = await res.json();
+      setSuggestions(data);
+      setLoading(false);
+    };
+
+    if (!debouncedQuery) return setSuggestions([]);
+    fetchSuggestions(debouncedQuery);
+  }, [debouncedQuery]);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setQuery(val);
     setIsOpen(true);
-    if (val.length > 1) fetchSuggestions(val);
-    else setSuggestions([]);
   };
 
   const handleSearch = (s: Suggestion) => {
