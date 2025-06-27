@@ -78,8 +78,8 @@ function App() {
           <div className="relative z-10 p-2 sm:p-4 md:p-6">
             {/* Main Title Section */}
             <div className="max-w-4xl md:max-w-5xl lg:max-w-7xl mx-auto mb-4 md:mb-8">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-6">
-                <div className="flex-shrink-0 mb-2 md:mb-0">
+              <div className="flex flex-col gap-3 md:gap-6 md:flex-row md:items-center md:justify-between">
+                <div>
                   <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 dark:text-white mb-1 md:mb-2">
                     Weather
                     <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent ml-2">
@@ -90,9 +90,8 @@ function App() {
                     Stay updated with accurate weather forecasts worldwide
                   </p>
                 </div>
-                {/* Search bar aligned right and long */}
-                <div className="w-full md:w-auto flex md:justify-end">
-                  <div className="w-full md:w-[500px] lg:w-[700px]">
+                <div className="w-full md:w-auto flex-1 md:max-w-3xl lg:max-w-3xl">
+                  <div className="w-full">
                     <SearchBar onLocationSelect={handleLocationSelect} />
                   </div>
                 </div>
